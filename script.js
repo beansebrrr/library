@@ -3,12 +3,35 @@
  */
 
 const LIBRARY = []
+const bookTableBody = document.querySelector('#book-table>tbody');
+const btnAddBook = document.querySelector("#add-new-book");
+
+btnAddBook.addEventListener('click', () => {
+  const newBook = promptForNewBook();
+  LIBRARY.push(newBook);
+  updateTable();
+})
 
 function Book(title, author, numOfPages, haveRead) {
   this.title = title;
   this.author = author;
   this.numOfPages = numOfPages;
   this.haveRead = haveRead;
+}
+
+const updateTable = () => {
+  bookTableBody.replaceChildren();
+  const tableCell = document.createElement("td")
+  
+  LIBRARY.forEach(book => {
+    const bookEntry = document.createElement("tr");
+    Object.keys(book).forEach(property => {
+      const propertyCell = tableCell.cloneNode();
+      propertyCell.textContent = book[property];
+      bookEntry.appendChild(propertyCell);
+    })
+    bookTableBody.appendChild(bookEntry);
+  })
 }
 
 const promptForNewBook = () => {
@@ -23,7 +46,6 @@ const promptForNewBook = () => {
   do {
     haveRead = boolify(prompt("Have you read this book?"));
   } while (haveRead !== true && haveRead !== false);
-
 
   return new Book(title, author, numOfPages, haveRead);
 }
