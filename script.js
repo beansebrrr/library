@@ -30,3 +30,14 @@ const boolify = (string) => {
 /**
  * Book Control
  */
+
+const BOOK_GRID = document.querySelector(".book-grid");
+const BOOK_CHILDREN_CLASSNAMES = ["book-title", "book-author", "page-count"]
+
+BOOK_GRID.addEventListener("dblclick", (e) => {
+  let book = e.target;
+  if ((book.className !== "book" && book.parentElement.className !== "book") && book.className === "book-grid") return
+  else if (BOOK_CHILDREN_CLASSNAMES.includes(book.className)) book = book.parentElement
+
+  book.classList.toggle("have-read")
+});

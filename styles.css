@@ -77,3 +77,17 @@ main {
   border-left: #000 solid 1px;
   border-radius: 4px 0 8px 0;
 }
+
+.have-read {
+  background-color: #aaa;
+  
+  &::after {
+    content: "Finished";
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    bottom: 2rem;
+    font-size: 2rem;
+  }
+}
