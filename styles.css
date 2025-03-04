@@ -8,6 +8,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  min-width: 100vw;
 }
 
 h1 {
@@ -23,24 +24,56 @@ main {
   * { width: max-content; }
 }
 
-table {
-  border: #000000 solid 2px;
-  border-spacing: 0;
+.book-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, 12rem);
+  justify-content: center;
+  gap: calc(2rem + 1.25rem) 2rem;
+}
 
-  thead {
-    background-color: #ffd986;
-  }
+.book {
+  user-select: none;
+  background-color: #84a5ff;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 2rem 1rem;
+  position: relative;
+  border-radius: 8px;
+  transition: background-color 200ms ease;
 
-  th, td {
-    padding: 0.25em 1em;
-  }
-
-  th {
-    border-bottom: #000000 solid 1px;
-  }
-
-  tbody>tr:nth-child(even) {
-    background-color: #f1f1f1;
+  &::before {
+    z-index: -1;
+    content: "";
+    width: 100%;
+    height: calc(100% + 1rem);
+    background-color: inherit;
+    filter: saturate(5) brightness(0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    scale: 1.025;
+    box-shadow: #0003 0 8px 12px 4px;
   }
 }
 
+.book-title,
+.book-author {
+  max-width: 10ch;
+  text-align: center;
+  margin: 0 auto 0.5rem;
+}
+
+.page-count {
+  position: absolute;
+  background-color: #e6e6e6;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0.5em;
+  bottom: 0;
+  right: 0;
+  border-top: #000 solid 1px;
+  border-left: #000 solid 1px;
+  border-radius: 4px 0 8px 0;
+}
