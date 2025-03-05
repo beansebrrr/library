@@ -35,10 +35,11 @@ const checkboxRead = document.querySelector("#have-read");
 const btnAddBook = document.querySelector("#submit");
 
 btnAddBook.addEventListener("click", () => {
-  validateFields();
+  if (!validateFields()) return
   const newBook = getNewBook();
   LIBRARY.push(newBook);
   updateLibrary();
+  clearFields();
 })
 
 const getNewBook = () => {
@@ -79,21 +80,34 @@ const createBookElement = (book) => {
 const validateFields = () => {
   console.log("validation in progress")
   let errorField;
+  let isValid = true;
 
   errorField = bookTitleField.parentElement.querySelector(".error-text");
   if (bookTitleField.value === "") {
     errorField.textContent = "Please enter the book's title."
+    isValid = false;
   } else errorField.textContent = "";
-
+  
   errorField = bookAuthorField.parentElement.querySelector(".error-text");
   if (bookAuthorField.value === "") {
     errorField.textContent = "Who's the author?"
+    isValid = false;
   } else errorField.textContent = "";
-
+  
   errorField = pageCountField.parentElement.querySelector(".error-text");
   if (Number.isNaN(parseInt(pageCountField.value)) || parseInt(pageCountField.value) < 1) {
     errorField.textContent = "Invalid number of pages."
+    isValid = false;
   } else errorField.textContent = "";
+
+  return isValid;
+}
+
+const clearFields = () => {
+  bookTitleField.value = '';
+  bookAuthorField.value = '';
+  pageCountField.value = '';
+  checkboxRead.checked = false;
 }
 
 

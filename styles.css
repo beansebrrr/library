@@ -127,9 +127,17 @@ main {
 
 aside {  
   grid-column: span 3;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   background-color: #fff7;
   box-shadow: #4443 0 0 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  >span, >span * {
+    color: #000;
+    margin-inline: auto;
+  }
 }
 
 aside>form {
