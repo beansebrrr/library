@@ -3,13 +3,6 @@
  */
 
 const LIBRARY = []
-const btnAddBook = document.querySelector("#add-new-book");
-
-btnAddBook.addEventListener('click', () => {
-  const newBook = promptForNewBook();
-  LIBRARY.push(newBook);
-  updateTable();
-})
 
 function Book(title, author, numOfPages, haveRead) {
   this.title = title;
@@ -36,8 +29,22 @@ const BOOK_CHILDREN_CLASSNAMES = ["book-title", "book-author", "page-count"]
 
 BOOK_GRID.addEventListener("dblclick", (e) => {
   let book = e.target;
+
+  // Only allows dblclick on book elements.
   if ((book.className !== "book" && book.parentElement.className !== "book") && book.className === "book-grid") return
   else if (BOOK_CHILDREN_CLASSNAMES.includes(book.className)) book = book.parentElement
 
-  book.classList.toggle("have-read")
+  book.classList.toggle("have-read");
 });
+
+
+/**
+ * Grid testing
+ */
+
+const bookDupes = 12;
+const BOOK_ITEM = document.querySelector(".book");
+
+for (let i = 0; i < bookDupes; i++) {
+  BOOK_GRID.appendChild(BOOK_ITEM.cloneNode(true))
+}

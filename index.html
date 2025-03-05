@@ -20,25 +20,29 @@
         <p class="book-author">Morgan Housel</p>
         <p class="page-count">256</p>
       </div>
-      <div class="book">
-        <h3 class="book-title">The Psychology of Money</h3>
-        <p class="book-author">Morgan Housel</p>
-        <p class="page-count">256</p>
-      </div>
-      <div class="book">
-        <h3 class="book-title">The Psychology of Money</h3>
-        <p class="book-author">Morgan Housel</p>
-        <p class="page-count">256</p>
-      </div>
-      <div class="book">
-        <h3 class="book-title">The Psychology of Money</h3>
-        <p class="book-author">Morgan Housel</p>
-        <p class="page-count">256</p>
-      </div>
     </section>
   </main>
   <aside>
-    
+    <form>
+      <h2>&#x2795; Add a new book</h2>
+      <div class="form-group">
+        <input type="text" id="book-title" required>
+        <label for="book-title">Title</label>
+      </div>
+      <div class="form-group">
+        <input type="text" id="book-author" required>
+        <label for="book-author">Author</label>
+      </div>
+      <div class="form-group">
+        <input type="number" id="page-count" required>
+        <label for="page-count">Number of pages</label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="have-read">
+        <label for="have-read">Have you read this book?</label>
+      </div>
+      <button id="submit">&#x2795;</button>
+    </form>
   </aside>
 </body>
 </html>

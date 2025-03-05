@@ -13,7 +13,6 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  min-width: 100vw;
   min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -21,7 +20,7 @@ body {
   >* { border: #ff9900 solid 1px;}
 }
 
-h1 {
+h1, h2 {
   text-align: center;
 }
 
@@ -30,10 +29,9 @@ header {
 }
 
 main {
+  padding-inline: clamp(2rem, 8%, 8);
+  padding-block: 2rem;
   grid-column: span 9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 1rem;
 
   * { width: max-content; }
@@ -41,11 +39,17 @@ main {
 
 aside {
   grid-column: span 3;
+  padding: 1rem 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 .book-grid {
-  display: grid;
   width: 100%;
+  display: grid;
   grid-template-columns: repeat(auto-fit, 12.5rem);
   justify-content: center;
   gap: calc(2rem + 1.25rem) 2rem;
@@ -112,12 +116,89 @@ aside {
   background-color: #aaa;
   
   &::after {
-    content: "Finished";
+    content: "☑️";
     position: absolute;
     width: 100%;
     text-align: center;
     left: 0;
     bottom: 2rem;
     font-size: 2rem;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-height: 3rem;
+  width: 100%;
+  
+  input[type=text], input[type=number] {
+    border: none;
+    width: 100%;
+    border-bottom: #000 dotted 2px;
+
+    &:focus { outline: none }
+
+    &:focus + label, &:valid + label {
+      transform: translateY(-1em);
+      font-size: 0.75em;
+    }
+  }
+
+  label {
+    user-select: none;
+    text-align: start;
+    position: relative;
+    left: 0;
+    bottom: 1.5rem;
+    width: 100%;
+    transition: font-size 200ms ease, transform 200ms ease;
+  }
+
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#have-read {
+  position: relative;
+  font-size: 1.5em;
+  width: 1.5rem;
+  height: 1.5rem;
+  accent-color: #00c8ff;
+  &:focus { outline: none;}
+}
+
+label[for=have-read] {
+  position: static;
+}
+
+#submit {
+  min-height: 1.75em;
+  background-color: #e3e3e3;
+  border: #939393 solid 3px;
+  border-radius: 8px;
+  box-shadow: #939393 0 6px;
+  transition: all 50ms ease;
+  user-select: none;
+  
+  aspect-ratio: 1 / 1;
+  font-size: 2rem;
+
+  &:active {
+    transform: translateY(6px);
+    box-shadow: none;
   }
 }
