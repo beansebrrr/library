@@ -9,11 +9,7 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Odin Library</h1>
-  </header>
   <main>
-    <h2>Books</h2>
     <section class="book-grid">
       <div class="book">
         <h3 class="book-title">The Psychology of Money</h3>
@@ -23,25 +19,28 @@
     </section>
   </main>
   <aside>
-    <form>
-      <h2>&#x2795; Add a new book</h2>
+    <form id="new-book-form">
+      <h2>&#x1F4DA; Add a new book</h2>
       <div class="form-group">
         <input type="text" id="book-title" required>
         <label for="book-title">Title</label>
+        <p class="error-text"></p>
       </div>
       <div class="form-group">
         <input type="text" id="book-author" required>
         <label for="book-author">Author</label>
+        <p class="error-text"></p>
       </div>
       <div class="form-group">
         <input type="number" id="page-count" required>
         <label for="page-count">Number of pages</label>
+        <p class="error-text"></p>
       </div>
       <div class="checkbox-group">
         <input type="checkbox" id="have-read">
         <label for="have-read">Have you read this book?</label>
       </div>
-      <button id="submit">&#x2795;</button>
+      <button type="button" id="submit">&#x2795;</button>
     </form>
   </aside>
 </body>
