@@ -22,7 +22,7 @@
 }
 
 body {
-  background: linear-gradient(0deg, #ff5ae9dd, #9797ffdd);
+  background: linear-gradient(0deg, #ff8e5add, #ffec97dd);
   z-index: -99;
   font-family: Raleway, Arial, sans-serif;
   margin: 0;
@@ -46,6 +46,7 @@ main {
   gap: 1rem;
 
   * { width: max-content; }
+  >p { margin: 0 auto 2rem;}
 }
 
 .book-grid {
@@ -58,7 +59,7 @@ main {
 
 .book {
   user-select: none;
-  background-color: #f1ff57;
+  
   width: 100%;
   aspect-ratio: 4 / 5.5;
   padding: 2rem 1rem;
@@ -66,12 +67,18 @@ main {
   border: #0005 solid 4px;
   border-radius:4px 12px 12px 4px;
   box-shadow: inset #0005 0 -1.5rem, #0004 0 0.5rem 1rem 0.5rem;
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition: transform 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
 
   &:hover {
     transform: translateY(-6px);
     box-shadow: inset #0005 0 -1.5rem, #0004 0 calc(0.5rem + 6px) 1.5rem 0.75rem;;
   }
+
+  &:nth-child(5n) { background-color: #ff77ab }
+  &:nth-child(5n+1) { background-color: #f200c5 }
+  &:nth-child(5n+2) { background-color: #7189FF }
+  &:nth-child(5n+3) { background-color: #31E981 }
+  &:nth-child(5n+4) { background-color: #d268ff }
 }
 
 .book-title,
@@ -104,11 +111,11 @@ main {
 }
 
 .have-read {
-  background-color: #888;
+  background-color: #888 !important;
   transition: background-color 200ms ease, inherit;
   
   &::after {
-    content: "☑️";
+    content: "👁️";
     position: absolute;
     width: 100%;
     text-align: center;

@@ -1,7 +1,9 @@
 /**
- * LIBRARY
+ * BASIC COMPONENTS
  */
-const LIBRARY = document.querySelector(".book-grid");
+
+let LIBRARY = []
+const LIBRARY_DISPLAY = document.querySelector(".book-grid");
 
 function Book(title, author, numOfPages, haveRead) {
   this.title = title;
@@ -10,18 +12,20 @@ function Book(title, author, numOfPages, haveRead) {
   this.haveRead = haveRead;
 }
 
-const boolify = (string) => {
-  const YES = ["y", "yes", "true", "t", "on", "1"];
-  const NO  = ["n", "no", "false", "f", "off", "0"];
-
-  if (YES.includes(string)) return true;
-  else if (NO.includes(string)) return false;
-  else return 7008;
+const updateLibrary = () => {
+  console.log("updating")
+  LIBRARY_DISPLAY.textContent = '';
+  LIBRARY.map(book => {
+    const bookElement = createBookElement(book);
+    LIBRARY_DISPLAY.appendChild(bookElement);
+  })
 }
+
+document.addEventListener("DOMContentLoaded", () => updateLibrary())
 
 
 /**
- * Book submission
+ * Adding a new book to the list
  */
 
 const bookTitleField = document.querySelector("#book-title");
@@ -33,8 +37,44 @@ const btnAddBook = document.querySelector("#submit");
 btnAddBook.addEventListener("click", () => {
   validateFields();
   const newBook = getNewBook();
-  createBookElement(newBook);
+  LIBRARY.push(newBook);
+  updateLibrary();
 })
+
+const getNewBook = () => {
+  return new Book(
+    title      = bookTitleField.value,
+    author     = bookAuthorField.value,
+    numOfPages = parseInt(pageCountField.value), 
+    haveRead   = checkboxRead.checked,
+  );
+}
+
+const createBookElement = (book) => {
+  const bookElementCover = document.createElement("div");
+  bookElementCover.classList.add("book");
+
+  const bookElementTitle = document.createElement("h3");
+  bookElementTitle.classList.add("book-title");
+  bookElementTitle.textContent = book.title;
+
+  const bookElementAuthor = document.createElement("p");
+  bookElementAuthor.classList.add("book-author");
+  bookElementAuthor.textContent = book.author;
+
+  const pageCountElement = document.createElement("p");
+  pageCountElement.classList.add("page-count");
+  pageCountElement.textContent = book.numOfPages;
+
+  if (book.haveRead) bookElementCover.classList.add("have-read");
+  
+  bookElementCover
+    .appendChild(bookElementTitle)
+    .parentElement.appendChild(bookElementAuthor)
+    .parentElement.appendChild(pageCountElement);
+
+  return bookElementCover;
+}
 
 const validateFields = () => {
   console.log("validation in progress")
@@ -56,49 +96,14 @@ const validateFields = () => {
   } else errorField.textContent = "";
 }
 
-const getNewBook = () => {
-  return new Book(
-    title      = bookTitleField.value,
-    author     = bookAuthorField.value,
-    numOfPages = parseInt(pageCountField.value), 
-    haveRead   = checkboxRead.checked,
-  );
-}
 
-const createBookElement = (book) => {
-  const bookElementCover = document.createElement("div");
-  bookElementCover.classList.add("book");
-
-  const bookElementTitle = document.createElement("h3")
-  bookElementTitle.classList.add("book-title");
-  bookElementTitle.textContent = bookTitleField.value;
-
-  const bookElementAuthor = document.createElement("p")
-  bookElementAuthor.classList.add("book-author");
-  bookElementAuthor.textContent = bookAuthorField.value;
-
-  const pageCountElement = document.createElement("p")
-  pageCountElement.classList.add("page-count");
-  pageCountElement.textContent = pageCountField.value;
-
-  bookElementCover
-    .appendChild(bookElementTitle)
-    .parentElement.appendChild(bookElementAuthor)
-    .parentElement.appendChild(pageCountElement);
-
-  if (checkboxRead.checked) bookElementCover.classList.add("have-read")
-
-  console.log("I'm here now")
-  LIBRARY.appendChild(bookElementCover)
-}
-
-/**
- * Book Control
+/** 
+ * Double-click to mark book as read.
  */
 
 const BOOK_CHILDREN_CLASSNAMES = ["book-title", "book-author", "page-count"]
 
-LIBRARY.addEventListener("dblclick", (e) => {
+LIBRARY_DISPLAY.addEventListener("dblclick", (e) => {
   let book = e.target;
   console.log(book.className)
 
@@ -107,16 +112,31 @@ LIBRARY.addEventListener("dblclick", (e) => {
   else if (BOOK_CHILDREN_CLASSNAMES.includes(book.className)) book = book.parentElement
 
   book.classList.toggle("have-read");
+
+  // toggle the book toggle in the array
+  const bookTitle = book.querySelector(".book-title").textContent
+  const bookAuthor = book.querySelector(".book-author").textContent
+  const pageCount = parseInt(book.querySelector(".page-count").textContent)
+  console.log("yeah")
+  LIBRARY.map(book => {
+    book.title === bookTitle
+    && book.author === bookAuthor
+    && book.numOfPages === pageCount
+    ? book.haveRead = !book.haveRead
+    : book
+  })
 });
 
 
 /**
- * Grid testing
+ * For demonstration purposes
  */
 
-const bookDupes = 0;
-const BOOK_ITEM = document.querySelector(".book");
+const thePsychologyOfMoney = new Book(
+  title      = "The Psychology of Money",
+  author     = "Morgan Housel",
+  numOfPages = 256,
+  haveRead   = true,
+)
 
-for (let i = 0; i < bookDupes; i++) {
-  LIBRARY.appendChild(BOOK_ITEM.cloneNode(true))
-}
+LIBRARY.push(thePsychologyOfMoney)
