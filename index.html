@@ -9,26 +9,35 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Odin Library</h1>
-  </header>
   <main>
-    <button id="add-new-book">Add new book</button>
-    <table id="book-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Pages</th>
-          <th>Have read?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="4" align="center">No books available at the moment</td>
-        </tr>
-      </tbody>
-    </table>
+    <p>Double click a book to mark as read</p>
+    <section class="book-grid">
+    </section>
   </main>
+  <aside>
+    <form id="new-book-form">
+      <h2>&#x1F4DA; Add a new book</h2>
+      <div class="form-group">
+        <input type="text" id="book-title" required>
+        <label for="book-title">Title</label>
+        <p class="error-text"></p>
+      </div>
+      <div class="form-group">
+        <input type="text" id="book-author" required>
+        <label for="book-author">Author</label>
+        <p class="error-text"></p>
+      </div>
+      <div class="form-group">
+        <input type="number" id="page-count" required>
+        <label for="page-count">Number of pages</label>
+        <p class="error-text"></p>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="have-read">
+        <label for="have-read">Have you read this book?</label>
+      </div>
+      <button type="button" id="submit">&#x2795;</button>
+    </form>
+  </aside>
 </body>
 </html>

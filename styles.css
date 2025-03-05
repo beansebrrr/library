@@ -4,43 +4,218 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+@font-face {
+  font-family: 'Koulen';
+  src: url(./fonts/koulen-v28-latin-regular.woff2);
 }
 
-h1 {
+@font-face {
+  font-family: 'Raleway';
+  src: url(./fonts/Raleway-Regular.woff2);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  src: url(./fonts/Raleway-Bold.woff2);
+  font-weight: 700;
+}
+
+body {
+  background: linear-gradient(0deg, #ff8e5add, #ffec97dd);
+  z-index: -99;
+  font-family: Raleway, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+h1, h2 {
   text-align: center;
+  margin: 0;
+  user-select: none;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  z-index: 0;
+  padding-inline: clamp(2rem, 8%, 8);
+  padding-block: 2rem;
+  grid-column: span 9;
   gap: 1rem;
 
   * { width: max-content; }
+  >p { margin: 0 auto 2rem;}
 }
 
-table {
-  border: #000000 solid 2px;
-  border-spacing: 0;
+.book-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 12.5rem);
+  justify-content: center;
+  gap: calc(2rem + 1.25rem) 2rem;
+}
 
-  thead {
-    background-color: #ffd986;
+.book {
+  user-select: none;
+  
+  width: 100%;
+  aspect-ratio: 4 / 5.5;
+  padding: 2rem 1rem;
+  position: relative;
+  border: #0005 solid 4px;
+  border-radius:4px 12px 12px 4px;
+  box-shadow: inset #0005 0 -1.5rem, #0004 0 0.5rem 1rem 0.5rem;
+  transition: transform 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: inset #0005 0 -1.5rem, #0004 0 calc(0.5rem + 6px) 1.5rem 0.75rem;;
   }
 
-  th, td {
-    padding: 0.25em 1em;
-  }
+  &:nth-child(5n) { background-color: #ff77ab }
+  &:nth-child(5n+1) { background-color: #f200c5 }
+  &:nth-child(5n+2) { background-color: #7189FF }
+  &:nth-child(5n+3) { background-color: #31E981 }
+  &:nth-child(5n+4) { background-color: #d268ff }
+}
 
-  th {
-    border-bottom: #000000 solid 1px;
-  }
+.book-title,
+.book-author {
+  max-width: 12ch;
+  text-align: center;
+  margin: 0 auto 0.5rem;
+}
 
-  tbody>tr:nth-child(even) {
-    background-color: #f1f1f1;
+.book-title {
+  font-size: 1.5rem;
+  font-family: 'Koulen', 'Courier New', Courier, monospace;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.book-author {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.page-count {
+  position: absolute;
+  background-color: #e6e6e6;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0.5em;
+  bottom: 1.5rem;
+  right: 0;
+  border-radius: 4px 0 8px 0;
+}
+
+.have-read {
+  background-color: #888 !important;
+  transition: background-color 200ms ease, inherit;
+  
+  &::after {
+    content: "👁️";
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    bottom: 2rem;
+    font-size: 2rem;
   }
 }
 
+aside {  
+  grid-column: span 3;
+  padding: 0 2rem;
+  background-color: #fff7;
+  box-shadow: #4443 0 0 2rem 1rem;
+}
+
+aside>form {
+  display: grid;
+  grid-template-rows: repeat(5, 3rem);
+  gap: 3rem;
+  position: sticky;
+  top: 4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  position: relative;
+  
+  input[type=text], input[type=number] {
+    font-size: 1rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    width: 100%;
+    border-bottom: #000 dotted 2px;
+
+    &:focus { outline: none }
+
+    &:focus + label, &:valid + label {
+      transform: translateY(-1.2em);
+      font-size: 0.75em;
+    }
+  }
+
+  label {
+    user-select: none;
+    text-align: start;
+    position: relative;
+    left: 0;
+    bottom: 1.5rem;
+    width: 100%;
+    transition: font-size 200ms ease, transform 200ms ease;
+  }
+
+  .error-text {
+    color: #f00;
+    font-size: 0.85rem;
+    margin: 0;
+    position: absolute;
+    top: 2em;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#have-read {
+  position: relative;
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  accent-color: #00c8ff;
+  &:focus { outline: none;}
+}
+
+label[for=have-read] {
+  position: static;
+}
+
+#submit {
+  font-size: 2rem;
+  background-color: #74ffcc;
+  width: max-content;
+  padding: 0.5em;
+  margin: auto;
+  border-radius: 8px;
+  border: #009f82 solid 3px;
+  box-shadow: #009f82 0 6px;
+  transition: all 50ms ease;
+  aspect-ratio: 1 / 1;
+  align-self: center;
+
+  &:active {
+    transform: translateY(6px);
+    box-shadow: none;
+  }
+}
