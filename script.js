@@ -2,18 +2,28 @@
  * BASIC COMPONENTS
  */
 
-let LIBRARY = []
-const LIBRARY_DISPLAY = document.querySelector(".book-grid");
 
-const updateLibrary = () => {
-  console.log("updating")
-  LIBRARY_DISPLAY.textContent = '';
-  LIBRARY.map(book => {
-    LIBRARY_DISPLAY.appendChild(book.htmlElement());
-  })
+
+
+class Library {
+  arr = []
+  constructor(querySelector) {
+    this.element = document.querySelector(querySelector)
+
+    this.update()
+  }
+
+  update() {
+    console.log("balls")
+    this.element.textContent = '';
+    this.arr.forEach(book => this.element.appendChild(book.htmlElement()))
+  }
+
+  addNewBook(book) {
+    this.arr.push(book)
+    this.update()
+  }
 }
-
-document.addEventListener("DOMContentLoaded", () => updateLibrary())
 
 
 class Book {
@@ -23,11 +33,13 @@ class Book {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
+    
+    this.bookElementCover = document.createElement("div");
+    this.bookElementCover.classList.add("book")
   }
-
+  
   htmlElement() {
-    const bookElementCover = document.createElement("div");
-    bookElementCover.classList.add("book")
+    this.bookElementCover.replaceChildren()
 
     const bookElementTitle = document.createElement("h3");
     bookElementTitle.classList.add("book-title");
@@ -41,14 +53,24 @@ class Book {
     pageCountElement.classList.add("page-count");
     pageCountElement.textContent = this.numOfPages;
 
-    if (this.haveRead) bookElementCover.classList.add("have-read")
+    if (this.haveRead) this.bookElementCover.classList.add("have-read")
 
-    bookElementCover
+    this.bookElementCover
       .appendChild(bookElementTitle)
       .parentElement.appendChild(bookElementAuthor)
       .parentElement.appendChild(pageCountElement);
 
-  return bookElementCover;
+    this.bookElementCover.addEventListener("dblclick", () => {
+      this.toggleHaveRead()
+    })
+
+    return this.bookElementCover;
+  }
+
+  toggleHaveRead() {
+    console.log("balls")
+    this.haveRead = !this.haveRead
+    this.bookElementCover.classList.toggle("have-read")
   }
 }
 
@@ -63,8 +85,8 @@ class BookForm {
     this.btnAddBook.addEventListener("click", () => {
       if (!this.validateFields()) return
       const newBook = this.submitBook();
-      LIBRARY.push(newBook);
-      updateLibrary();
+      
+      library.addNewBook(newBook)
       this.clearFields();
     })
   }
@@ -114,46 +136,21 @@ class BookForm {
   }
 }
 
-/** 
- * Double-click to mark book as read.
- */
 
-const BOOK_CHILDREN_CLASSNAMES = ["book-title", "book-author", "page-count"]
-
-LIBRARY_DISPLAY.addEventListener("dblclick", (e) => {
-  let book = e.target;
-
-  // Only allows dblclick on book elements.
-  if ((book.className !== "book" && book.parentElement.className !== "book") && book.className === "book-grid") return
-  else if (BOOK_CHILDREN_CLASSNAMES.includes(book.className)) book = book.parentElement
-
-  book.classList.toggle("have-read");
-
-  // toggle the book toggle in the array
-  const bookTitle = book.querySelector(".book-title").textContent
-  const bookAuthor = book.querySelector(".book-author").textContent
-  const pageCount = parseInt(book.querySelector(".page-count").textContent)
-  LIBRARY.map(book => {
-    book.title === bookTitle
-    && book.author === bookAuthor
-    && book.numOfPages === pageCount
-    ? book.haveRead = !book.haveRead
-    : book
-  })
-});
 
 
 /**
  * For demonstration purposes
  */
 
-const thePsychologyOfMoney = new Book({
-  title      : "The Psychology of Money",
-  author     : "Morgan Housel",
-  numOfPages : 256,
-  haveRead   : true,
-})
+// const thePsychologyOfMoney = new Book({
+//   title      : "The Psychology of Money",
+//   author     : "Morgan Housel",
+//   numOfPages : 256,
+//   haveRead   : true,
+// })
 
-LIBRARY.push(thePsychologyOfMoney)
+// LIBRARY.push(thePsychologyOfMoney)
 
-const bookForm = new BookForm()
+const library = new Library("section.book-grid")
+const bookForm = new BookForm(library)
