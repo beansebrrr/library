@@ -2,9 +2,6 @@
  * BASIC COMPONENTS
  */
 
-
-
-
 class Library {
   arr = []
   constructor(querySelector) {
@@ -74,6 +71,7 @@ class Book {
   }
 }
 
+
 class BookForm {
   bookTitleField = document.querySelector("#book-title");
   bookAuthorField = document.querySelector("#book-author");
@@ -135,22 +133,6 @@ class BookForm {
     });
   }
 }
-
-
-
-
-/**
- * For demonstration purposes
- */
-
-// const thePsychologyOfMoney = new Book({
-//   title      : "The Psychology of Money",
-//   author     : "Morgan Housel",
-//   numOfPages : 256,
-//   haveRead   : true,
-// })
-
-// LIBRARY.push(thePsychologyOfMoney)
 
 const library = new Library("section.book-grid")
 const bookForm = new BookForm(library)
